@@ -10,6 +10,7 @@ const iframe = document.querySelector('iframe');
             // if (localStorage.getItem('videoplayer-current-time')) {
             //     iframe.currentTime = parseFloat(localStorage.getItem('videoplayer-current-time'));
             //   }
+            const currentTime = timeupdate;
             localStorage.setItem('videoplayer-current-time', iframe.currentTime);
             console.log('Hello');
         });
