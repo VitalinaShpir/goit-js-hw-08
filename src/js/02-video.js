@@ -1,23 +1,34 @@
-
 import Player from '@vimeo/player';
-import throttle from 'lodash.throttle';
+import { throttle } from 'lodash.throttle';
 
 const iframe = document.querySelector('iframe');
-        const player = new Player(iframe);
-    
-        player.on('timeupdate', function() {
-            // console.log('played the video!');
-            // if (localStorage.getItem('videoplayer-current-time')) {
-            //     iframe.currentTime = parseFloat(localStorage.getItem('videoplayer-current-time'));
-            //   }
-            const currentTime = timeupdate;
-            localStorage.setItem('videoplayer-current-time', iframe.currentTime);
-            console.log('Hello');
-        });
-        
-        player.getVideoTitle().then(function(title) {
-            console.log('title:', title);
-        });
+const player = new Player(iframe);
+const TIME_KEY = 'videoplayer-current-time';
 
+const onPlay = function (data) {
+  const strigifyData = JSON.stringify(data);
+  localStorage.setItem(TIME_KEY, strigifyData);
+};
+player.on('timeupdate', throttle(onPlay, 1000));
+function resumePlayback() {
+  if (JSON.parse(localStorage.getItem(TIME_KEY)) === null) {
+    return;
+  }
+  const paused = JSON.parse(localStorage.getItem(TIME_KEY))['seconds'];
+  if (paused) {
+    player
+      .setCurrentTime(paused)
+      .then(function (seconds) {})
+      .catch(function (error) {
+        switch (error.name) {
+          case 'Error':
+            break;
+          default:
+            break;
+        }
+      });
+  }
+}
+resumePlayback();
 
-
+console.log('Hello');
