@@ -8,21 +8,35 @@ const refs = {
   textarea: document.querySelector(".feedback-form textarea")
 }
 
-refs.form.addEventListener('submit', onFormSubmit);
-refs.input.addEventListener('input', onEmailInput);
-refs.textarea.addEventListener('input', onTextareaInput);
+const STORAGE_KEY = 'feedback-form-state';
 
+const formData = {};
+
+populateTextarea();
+
+refs.form.addEventListener('submit', throttle(onFormSubmit, 500));
+
+refs.form.addEventListener('input', e => {
+    formData[e.target.name] = e.target.value;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+})
 function onFormSubmit(evt){
+evt.preventDefault();
+evt.currentTarget.reset();
+    // feedback-form-state
+localStorage.removeItem(STORAGE_KEY);
 
 };
 
 
-function onEmailInput(evt){
 
+function populateTextarea(){
+const savedMessage =  JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+if (savedMessage) {
+    refs.textarea.value = savedMessage['message'] || '';
+    refs.input.value = savedMessage['email'] || '';
+}
 };
 
-function onTextareaInput(evt){
-const value = evt.currentTarget.value;
-
-console.log(value)
-};
+console.log('hello')
