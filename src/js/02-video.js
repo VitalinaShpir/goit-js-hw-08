@@ -1,7 +1,10 @@
 import '../css/common.css';
 import Player from '@vimeo/player';
 import { throttle } from 'lodash';
+
+
 const TIME_KEY = 'videoplayer-current-time';
+
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 const onPlay = function ({seconds}) {
@@ -15,10 +18,8 @@ function resumePlayback() {
     return;
   }
 
-  
     player
       .setCurrentTime(paused);
       
-  
 }
 resumePlayback();
