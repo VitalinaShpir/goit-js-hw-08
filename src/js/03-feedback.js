@@ -25,12 +25,18 @@ function onFormInput(evt) {
 }
 
 function onFormSubmit(evt){
-evt.preventDefault();
-evt.currentTarget.reset();
-console.log(savedMessage);
-    // feedback-form-state
-localStorage.removeItem(STORAGE_KEY);
-savedMessage = {};
+    if (refs.input.value && refs.textarea.value) {
+        evt.preventDefault();
+        evt.currentTarget.reset();
+        console.log(savedMessage);
+            // feedback-form-state
+        localStorage.removeItem(STORAGE_KEY);
+        savedMessage = {};  
+    }
+    else {
+        return alert("Please, fill all fields!")
+    }
+
 
 };
 
