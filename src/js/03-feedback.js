@@ -13,7 +13,6 @@ const STORAGE_KEY = 'feedback-form-state';
 let savedMessage =  JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
 
-
 populateTextarea();
 
 refs.form.addEventListener('input', throttle(onFormInput, 500));
@@ -36,7 +35,6 @@ function onFormSubmit(evt){
     else {
         return alert("Please, fill all fields!")
     }
-
 
 };
 
